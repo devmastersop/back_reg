@@ -1,27 +1,30 @@
-const {Client} = require('pg');
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+const port = 3000;
 
-const connectionDB = {
-    user : 'postgres',
-    host : '127.0.0.1',
-    database : 'regiterPayroll',
-    password : 'vegeta497',
-    port : 5433,
-}
+//import files
+const queries = require('./queries');
+const global = require('./global');
+app.use(bodyParser.json());
 
-const client = new Client(connectionDB);
-
-client.connect();
-client.query('SELECT t.name_curso, c.name FROM curso t, program c WHERE t.program_idprogram = c.idprogram')
-    .then(response => {
-        //console.log(response.rows);
-        var obj = Object.values(response.rows);
-        console.log(obj);
-        // for(i=0; i<obj.length; i++){
-        //     console.log(obj.values);
-        // }
-        console.log(obj.length);
-        client.end()
+app.use(
+    bodyParser.urlencoded({
+        extended:true
     })
-    .catch (err => {
-        client.end();
-    })
+)
+
+
+app.get(global.URL_BASE + "teachers", queries.getUsers);
+
+app.get(global.URL_BASE + "teachers/:id", queries.getById);
+
+
+app.put(global.URL_BASE + "teacher/:id", queries.getById);
+
+app.listen(port, function(){
+    console.log('Api listen on port 3000!');
+})
+
+
+
