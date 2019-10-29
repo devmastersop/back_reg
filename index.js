@@ -1,12 +1,15 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const app = express();
-const port = 3000;
+const port = 3050;
 
 //import files
 const queries = require('./queries');
 const global = require('./global');
 app.use(bodyParser.json());
+app.use(cors());
+app.options('*', cors());
 
 app.use(
     bodyParser.urlencoded({
@@ -20,10 +23,10 @@ app.get(global.URL_BASE + "teachers", queries.getUsers);
 app.get(global.URL_BASE + "teachers/:id", queries.getById);
 
 
-app.put(global.URL_BASE + "teacher/:id", queries.getById);
+app.put(global.URL_BASE + "teachers/:id", queries.putHrs);
 
 app.listen(port, function(){
-    console.log('Api listen on port 3000!');
+    console.log('Api listen on port 3050!');
 })
 
 
