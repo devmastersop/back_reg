@@ -5,8 +5,11 @@ const app = express();
 const port = 3050;
 
 //import files
-const queries = require('./queries');
+const queries = require('./controllers/user_controller');
 const global = require('./global');
+
+
+
 app.use(bodyParser.json());
 app.use(cors());
 app.options('*', cors());
