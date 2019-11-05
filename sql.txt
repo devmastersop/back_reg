@@ -1,0 +1,83 @@
+INSERT INTO usuarios ( username, password, email, numberphone) VALUES (
+	 'paperman', 
+    PGP_SYM_ENCRYPT('paperman497','AES_KEY'),
+	'paperman@gmail.com',
+	941032387
+);
+
+INSERT INTO usuarios ( username, password, email, numberphone) VALUES (
+	'devman', 
+    CRYPT('devman497',gen_salt('bf', 8)),
+	'devman@gmail.com',
+	999004380
+);
+
+
+$body$
+DECLARE 
+N INT;
+BEGIN
+INSERT INTO usuarios ( username, password, email, numberphone) VALUES (
+	'devman', 
+    CRYPT('devman497',gen_salt('md5')),
+	'devman@gmail.com',
+	999004380
+)
+GET DIAGNOSTICS N := ROW_COUNT;
+raise notice 'count', N;
+return N;
+END;
+$body$
+
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+SELECT * FROM usuarios;
+SELECT  username FROM usuarios WHERE username = 'pacman' AND password = crypt('paperman497', password);
+SELECT PGP_SYM_DECRYPT(password::bytea, 'AES_KEY') as password FROM usuarios;
+delete from usuarios where username = 'devman';
+
+SELECT username FROM usuarios WHERE username='pacman' AND password = crypt('pacman497', password)
+
+SELECT username FROM usuarios WHERE username='paperman' AND password = crypt('paperman497', password)
+
+
+
+do $$
+BEGIN
+	IF EXISTS (SELECT username FROM usuarios WHERE username='pacman' AND password = crypt('paperman497', password))
+		then raise notice 'Existe ese usuario';
+	else 
+		raise notice 'No existe el usuario';
+	end if;
+END $$;
+
+
+update usuarios set password = crypt('pacman497',gen_salt('md5')) where username = 'pacman' and password = crypt('paperman497', password)
+
+if exists(select *from usuarios)then raise notice 'holi';
+
+
+
+SELECT  p.name_program, c.name_curso, t.name_teacher , t.ruc , tc.cant_hrs, c.cant_alumno, c.precio_hra, tc.pago_total FROM profesor_curso tc inner join teacher t on t.dni = tc.teacher_dni inner join curso c on c.idcurso=tc.curso_idcurso inner join program p on p.idprogram = c.program_idprogram WHERE dni = 75437262 or ruc= 45281552;
+
+
+CREATE TABLE public.usuarios
+(
+    iduser SERIAL ,
+    username character varying(12) COLLATE pg_catalog."default",
+    password character varying COLLATE pg_catalog."default",
+    email character varying COLLATE pg_catalog."default",
+    numberphone numeric(9,0),
+    logged boolean DEFAULT false,
+    CONSTRAINT usuarios_pkey PRIMARY KEY (iduser)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.usuarios
+    OWNER to postgres;
+
+DO $$
+GET DIAGNOSTICS N = ROW_COUNT
+END $$

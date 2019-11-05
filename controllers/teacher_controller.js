@@ -3,8 +3,8 @@ const db = require('../databases/queries');
 //connecton with tha database
 db.client.connect();
 
-const getUsers = (req, res) => {
-    db.client.query(db.qGetUsers, (err, results)=>{
+const getTeachers = (req, res) => {
+    db.client.query(db.qGetTeachers, (err, results)=>{
         if(err){
             throw err;
         }
@@ -39,7 +39,7 @@ function putHrs( req, res){
     
 }
 module.exports = {
-    getUsers,
+    getTeachers,
     getById,
     putHrs
 }
