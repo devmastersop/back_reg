@@ -29,12 +29,12 @@ function putHrs( req, res){
     const precio_hra    = parseInt(req.body.precio_hra);
     var pago_total = precio_hra * cant_hrs;
     console.log(cant_hrs);
-    db.client.query(qPutHrs, [cant_hrs, pago_total, id], function(err, response){
+    db.client.query(db.qPutHrs, [cant_hrs, pago_total, id], function(err, response){
         if(err){
             throw err;
         }
         res.status(200).send('teacher updated successfully!');
-        console.log(response);
+        //console.log(response);
     })
     
 }
