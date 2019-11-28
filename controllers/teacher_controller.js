@@ -4,23 +4,54 @@ const db = require('../databases/queries');
 db.client.connect();
 
 const getTeachers = (req, res) => {
-    db.client.query(db.qGetTeachers, (err, results)=>{
+    const query = req.query;
+    if(query.name !=undefined){
+        console.log("query exist");
+        const name = query.name.toUpperCase() + " ";
+        console.log(name+"mm");
+        db.client.query(db.qGetByName, [name], (err, results)=>{
+            if(err){
+                throw err;
+            }
+            res.status(200).json(results.rows);
+        })
+    }else{
+        console.log("query not exist");
+        db.client.query(db.qGetTeachers, (err, results)=>{
+            if(err){
+                throw err;
+            }
+            res.status(200).json(results.rows);
+            console.log(results.rows.length);
+        })
+    }
+    
+}
+
+function getBetween(req, res){
+    const per1 = req.params.per1;
+    console.log(per1);
+    const per2 = req.params.per2;
+    console.log(per2);
+    db.client.query(db.qGetbetween, [per1, per2], function(err, body){
         if(err){
             throw err;
         }
-        res.status(200).json(results.rows);
+        res.status(200).json(body.rows);
+        console.log(body.rows.length);
     })
 }
 
 function getById(req, res){
-    const id = parseInt(req.params.id);
+    const id = req.params.id;
     db.client.query(db.qGetById, [id], function(err, body){
-        if ( err){
+        if(err){
             throw err;
         }
         res.status(200).json(body.rows);
     })
 }
+
 
 
 function putHrs( req, res){
@@ -41,5 +72,6 @@ function putHrs( req, res){
 module.exports = {
     getTeachers,
     getById,
+    getBetween,
     putHrs
 }
