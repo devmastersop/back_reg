@@ -26,6 +26,8 @@ app.get(global.URL_BASE + "teachers", teacher_controller.getTeachers);
 
 app.get(global.URL_BASE + "teachers/:id", teacher_controller.getById);
 
+app.get(global.URL_BASE + "teacher/:per1&:per2", teacher_controller.getBetween);
+
 app.put(global.URL_BASE + "teachers/:id", teacher_controller.putHrs);
 
 app.post(global.URL_BASE + "login", auth_controller.postLogin);
