@@ -46,6 +46,7 @@ function getBetween(req, res){
 
 function getById(req, res){
     const id = req.params.id;
+    console.log(id);
     db.client.query(db.qGetById, [id], function(err, body){
         if(err){
             throw err;
@@ -58,11 +59,13 @@ function getById(req, res){
 
 function putHrs( req, res){
     const id = parseInt(req.params.id);
-    const cant_hrs = parseInt(req.body.cant_hrs);
-    const precio_hra    = parseInt(req.body.precio_hra);
-    var pago_total = precio_hra * cant_hrs;
-    console.log(cant_hrs);
-    db.client.query(db.qPutHrs, [cant_hrs, pago_total, id], function(err, response){
+    console.log(id);
+    console.log(req.body.t_horas);
+    const cant_hrs = parseInt(req.body.t_horas);
+    const precio_hra    = parseInt(req.body.t_unidad);
+    var pago_total = parseFloat(precio_hra * cant_hrs);
+    console.log(pago_total);
+    db.client.query(db.qPutHrs, [cant_hrs, precio_hra, pago_total, id], function(err, response){
         if(err){
             throw err;
         }
