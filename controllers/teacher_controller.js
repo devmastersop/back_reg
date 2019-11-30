@@ -5,9 +5,11 @@ db.client.connect();
 
 const getTeachers = (req, res) => {
     const query = req.query;
+    console.log(query.name);
     if(query.name !=undefined){
         console.log("query exist");
-        const name = query.name.toUpperCase() + " ";
+        console.log(query.name);
+        const name = query.name.toUpperCase();
         console.log(name+"mm");
         db.client.query(db.qGetByName, [name], (err, results)=>{
             if(err){
