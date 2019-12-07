@@ -8,7 +8,7 @@ const port = 3050;
 const teacher_controller = require('./controllers/teacher_controller');
 const auth_controller = require('./controllers/auth_controller');
 const global = require('./global');
-
+const test = require('./test');
 
 
 app.use(bodyParser.json());
@@ -27,6 +27,8 @@ app.get(global.URL_BASE + "teachers", teacher_controller.getTeachers);
 app.get(global.URL_BASE + "teachers/:id", teacher_controller.getById);
 
 app.get(global.URL_BASE + "teacher/:per1&:per2", teacher_controller.getBetween);
+
+app.get(global.URL_BASE + 'teachers/:id/pdf', test.getPdf);
 
 app.put(global.URL_BASE + "teachers/:id", teacher_controller.putHrs);
 

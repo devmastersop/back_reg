@@ -40,7 +40,6 @@ function getBetween(req, res){
             throw err;
         }
         res.status(200).json(body.rows);
-        console.log(body.rows.length);
     })
 }
 
@@ -74,8 +73,14 @@ function putHrs( req, res){
     })
     
 }
+
+function getPDFById(req, res){
+    const id = req.params.id;
+    console.log(__dirname);
+}
 module.exports = {
     getTeachers,
+    getPDFById,
     getById,
     getBetween,
     putHrs
